@@ -1550,6 +1550,7 @@ end sub
 private function hShouldAddForwardDeclForType(byref typ as hl.TYPENODE) as integer
 	'' Only if actually forward-referenced (as far as we can tell)
 	if typ.forwarduse then
+		/'
 		if typ.definition then
 			'' Defined in this binding, ok (most likely correct)
 			function = TRUE
@@ -1557,6 +1558,8 @@ private function hShouldAddForwardDeclForType(byref typ as hl.TYPENODE) as integ
 			'' Not defined here; only if -addforwarddecl was given
 			function = hl.api->idopt(tktokens.OPT_ADDFORWARDDECL).matches(typ.id)
 		end if
+		'/
+		return TRUE
 	end if
 end function
 
