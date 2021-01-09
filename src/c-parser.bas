@@ -297,7 +297,7 @@ function CParser.isDataType(byval y as integer) as integer
 	select case tk->get(y)
 	case KW_SIGNED, KW_UNSIGNED, KW_CONST, KW_SHORT, KW_LONG, _
 	     KW_ENUM, KW_STRUCT, KW_UNION, _
-	     KW_VOID, KW_CHAR, KW_FLOAT, KW_DOUBLE, KW_INT
+	     KW_VOID, KW_CHAR, KW_FLOAT, KW_DOUBLE, KW_INT, KW__BOOL
 		is_type = not identifierIsMacroParam(tk->spellId(y))
 	case TK_ID
 		var id = tk->spellId(y)
