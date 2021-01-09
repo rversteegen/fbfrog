@@ -5,6 +5,7 @@ enum E {
 	A = (A),
 	A = ((A)),
 	A = (void)0,
+	A = (_Bool)0,
 	A = (char)0,
 	A = (float)0,
 	A = (double)0,
@@ -427,6 +428,31 @@ enum E {
 	A =  a ? b : (c  ? d : e),
 	A = (a ? b :  c) ? d : e,
 
+	// Check _Bool arithmetic converts to long first
+	A = (int)(_Bool)1,  // 1
+	A = ~(_Bool)1,  // -2
+	A = -(_Bool)1,  // -1
+	A = !(_Bool)0,  // 1
+	A = 4 + (_Bool)4,  // 5
+	A = (_Bool)4 + 4,  // 5
+	A = (_Bool)1 + (_Bool)1,  // 2
+	A = ((_Bool)a),
+	A = ~((_Bool)a),
+	A = (int)(((_Bool)a)),
+	A = !(_Bool)a,
+	A = ~(_Bool)a,
+	A = ((_Bool)a) ? b : c,
+	A = ((_Bool)a || b),
+	A = (a || (_Bool)b),
+	A = ((_Bool)a || (_Bool)b),
+	A = ((_Bool)a && b),
+	A = (_Bool)a == b,
+	A = (_Bool)a == (_Bool)b,
+	A = a == (_Bool)b,
+	A = (_Bool)a != b,
+	A = a != (_Bool)b,
+	A = !!(_Bool)a,
+
 	ENUMCONST1 = 0,
 };
 
@@ -441,6 +467,7 @@ enum E {
 
 #define A06 (void)0
 #define A07 (char)0
+#define A07_1 (_Bool)0
 #define A08 (float)0
 #define A09 (double)0
 #define A10 (int)0
@@ -533,6 +560,21 @@ enum E {
 	#define A84 (-1)
 #endif
 #define A85 A84
+
+#define A86 (_Bool)0
+#define A87 ~(_Bool)0
+#define A88 !(_Bool)3
+
+// In most contexts _Bool expressions are converted to int, but not here
+_Bool A89 = (_Bool)a;
+int A90 = (_Bool)a;
+_Bool A91 = a;
+_Bool A92 = !a;
+_Bool A93 = !(_Bool)a;
+_Bool A94 = A93;
+int A95 = A93;
+_Bool getbool();
+#define A96 getbool() + 1
 
 // Same but with forward references
 #define B01 B00 // simple alias

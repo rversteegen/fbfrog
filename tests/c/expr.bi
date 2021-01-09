@@ -11,6 +11,7 @@ enum
 	A = A
 	A = A
 	A = cast(any, 0)
+	A = -clng(cbool(0))
 	A = cbyte(0)
 	A = csng(0)
 	A = cdbl(0)
@@ -383,6 +384,29 @@ enum
 	A = iif(a, b, iif(c, d, e))
 	A = iif(a, b, iif(c, d, e))
 	A = iif(iif(a, b, c), d, e)
+	A = clng(-clng(cbool(1)))
+	A = not (-clng(cbool(1)))
+	A = -(-clng(cbool(1)))
+	A = -(cbool(0) = 0)
+	A = 4 + (-clng(cbool(4)))
+	A = (-clng(cbool(4))) + 4
+	A = (-clng(cbool(1))) + (-clng(cbool(1)))
+	A = -clng(cbool(a))
+	A = not (-clng(cbool(a)))
+	A = clng(-clng(cbool(a)))
+	A = -(cbool(a) = 0)
+	A = not (-clng(cbool(a)))
+	A = iif(-clng(cbool(a)), b, c)
+	A = -(cbool(a) orelse b)
+	A = -(a orelse cbool(b))
+	A = -(cbool(a) orelse cbool(b))
+	A = -(cbool(a) andalso b)
+	A = -((-clng(cbool(a))) = b)
+	A = -((-clng(cbool(a))) = (-clng(cbool(b))))
+	A = -(a = (-clng(cbool(b))))
+	A = -((-clng(cbool(a))) <> b)
+	A = -(a <> (-clng(cbool(b))))
+	A = -((cbool(a) = 0) = 0)
 	ENUMCONST1 = 0
 end enum
 
@@ -396,6 +420,7 @@ end enum
 #define A01_3 "a" b "c"
 const A06 = cast(any, 0)
 const A07 = cbyte(0)
+const A07_1 = -clng(cbool(0))
 const A08 = csng(0)
 const A09 = cdbl(0)
 const A10 = clng(0)
@@ -485,6 +510,27 @@ const A77 = culng(culng(ENUMCONST1) - 1)
 	const A85 = A84
 #endif
 
+const A86 = -clng(cbool(0))
+const A87 = not (-clng(cbool(0)))
+const A88 = cbool(3) = 0
+
+extern     A89 as boolean
+dim shared A89 as boolean = -clng(cbool(a))
+extern     A90 as long
+dim shared A90 as long = -clng(cbool(a))
+extern     A91 as boolean
+dim shared A91 as boolean = a
+extern     A92 as boolean
+dim shared A92 as boolean = -(a = 0)
+extern     A93 as boolean
+dim shared A93 as boolean = -(cbool(a) = 0)
+extern     A94 as boolean
+dim shared A94 as boolean = A93
+extern     A95 as long
+dim shared A95 as long = A93
+declare function getbool() as boolean
+
+#define A96 (getbool() + 1)
 const B00 = culng(0u - 100u)
 const B01 = B00
 #define B11 culng(B10 - 1)
