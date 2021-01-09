@@ -28,12 +28,14 @@ dim shared fbkeywordsinfo(0 to ...) as FbKeywordInfo => { _
 	(@"AS"         , FBKW_CORE), _
 	(@"ASM"        , FBKW_CORE), _
 	(@"BASE"       , FBKW_CORE), _
+	(@"BOOLEAN"    , FBKW_CORE), _
 	(@"BYREF"      , FBKW_CORE), _
 	(@"BYTE"       , FBKW_CORE), _
 	(@"BYVAL"      , FBKW_CORE), _
 	(@"CALL"       , FBKW_CORE), _
 	(@"CASE"       , FBKW_CORE), _
 	(@"CAST"       , FBKW_CORE), _
+	(@"CBOOL"      , FBKW_CORE), _
 	(@"CBYTE"      , FBKW_CORE), _
 	(@"CDBL"       , FBKW_CORE), _
 	(@"CDECL"      , FBKW_CORE), _

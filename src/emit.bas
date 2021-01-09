@@ -53,10 +53,12 @@ dim shared tokentext(0 to TK__COUNT-1) as zstring ptr => { _
 	@"any"     , _
 	@"as"      , _
 	@"asc"     , _
+	@"boolean" , _
 	@"byte"    , _
 	@"byref"   , _
 	@"byval"   , _
 	@"cast"    , _
+	@"cbool"   , _
 	@"cbyte"   , _
 	@"cdbl"    , _
 	@"cdecl"   , _
