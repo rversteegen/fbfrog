@@ -10,6 +10,7 @@ end type
 enum
 	TYPE_NONE = 0
 	TYPE_ANY          '' C void
+	TYPE_BOOLEAN      '' C _Bool/FB boolean (uint8)
 	TYPE_BYTE         '' int8
 	TYPE_UBYTE        '' uint8
 	TYPE_SHORT        '' int16

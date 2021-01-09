@@ -91,7 +91,7 @@ end sub
 
 private function typeIsNumeric(byval dtype as integer) as integer
 	select case as const dtype
-	case TYPE_BYTE, TYPE_UBYTE, TYPE_SHORT, TYPE_USHORT, _
+	case TYPE_BOOLEAN, TYPE_BYTE, TYPE_UBYTE, TYPE_SHORT, TYPE_USHORT, _
 	     TYPE_LONG, TYPE_ULONG, TYPE_CLONG, TYPE_CULONG, _
 	     TYPE_INTEGER, TYPE_UINTEGER, TYPE_LONGINT, TYPE_ULONGINT, _
 	     TYPE_SINGLE, TYPE_DOUBLE
@@ -104,7 +104,8 @@ end function
 '' of hlAddMathCasts() anyways, as the result type depends on the lhs, whose
 '' type we can typically not determine...
 private function typeCBop(byval astkind as integer, byval a as integer, byval b as integer) as integer
-	'' Logic/relational operations: result always is a 32bit int
+	'' Logic/relational operations: result always is a (32bit) int
+	'' (unlike C++ where the result type is bool)
 	select case as const astkind
 	case ASTKIND_CLOGOR, ASTKIND_CLOGAND, _
 	     ASTKIND_CEQ, ASTKIND_CNE, ASTKIND_CLT, _

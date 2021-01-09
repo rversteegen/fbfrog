@@ -204,7 +204,7 @@ sub CodeGen.add(byval typ as ulong, byval payload as const ubyte ptr, byval size
 end sub
 
 dim shared as ushort typeToKw(0 to TYPE__COUNT-1) = { _
-	TK_TEXT, KW_ANY, _
+	TK_TEXT, KW_ANY, KW_BOOLEAN, _
 	KW_BYTE, KW_UBYTE, _
 	KW_SHORT, KW_USHORT, _
 	KW_LONG, KW_ULONG, _
@@ -676,6 +676,7 @@ sub CodeGen.emitExpr(byval n as AstNode ptr, byval need_parens as integer, byval
 	case ASTKIND_CAST
 		var is_comma_list = FALSE
 		select case n->dtype
+		case TYPE_BOOLEAN  : add(KW_CBOOL   ) : add(TK_LPAREN)
 		case TYPE_BYTE     : add(KW_CBYTE   ) : add(TK_LPAREN)
 		case TYPE_UBYTE    : add(KW_CUBYTE  ) : add(TK_LPAREN)
 		case TYPE_SHORT    : add(KW_CSHORT  ) : add(TK_LPAREN)

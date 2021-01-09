@@ -34,6 +34,7 @@ end function
 dim shared datatypenames(0 to TYPE__COUNT-1) as zstring ptr => { _
 	@"none"    , _
 	@"any"     , _
+	@"boolean" , _
 	@"byte"    , _
 	@"ubyte"   , _
 	@"short"   , _
