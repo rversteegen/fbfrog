@@ -146,7 +146,7 @@ private function typeCBop(byval astkind as integer, byval a as integer, byval b 
 	if (a = TYPE_DOUBLE) or (b = TYPE_DOUBLE) then return TYPE_DOUBLE
 	if (a = TYPE_SINGLE) or (b = TYPE_SINGLE) then return TYPE_SINGLE
 
-	'' Promote byte/short to int32 (this always happens, both on 32bit and 64bit)
+	'' Promote _Bool/byte/short to int32 (this always happens, both on 32bit and 64bit)
 	if a < TYPE_LONG then a = TYPE_LONG
 	if b < TYPE_LONG then b = TYPE_LONG
 
@@ -400,6 +400,11 @@ end function
 '' In order to make sure we always get &hFFFFFF9Cu in FB, we have to truncate
 '' the operation's result to 32bit explicitly.
 ''
+'' Additionally, whenever _Bool appears in an expression in C it is promoted to
+'' an int, while in FB when NOT is used on a boolean it doesn't promote, and
+'' other arithmetic is illegal. So we need to convert _Bool to long first in the
+'' way C does it: to 0/1, not to 0/-1
+''
 private function hlAddMathCasts(byval parent as AstNode ptr, byval n as AstNode ptr) as AstNode ptr
 	var i = n->head
 	while i
@@ -414,7 +419,6 @@ private function hlAddMathCasts(byval parent as AstNode ptr, byval n as AstNode 
 	     ASTKIND_CLOGNOT, ASTKIND_NOT, ASTKIND_NEGATE, ASTKIND_UNARYPLUS, _
 	     ASTKIND_SIZEOF
 		'' Wrap uint32 operation in a cast, unless there already is a cast
-		'' TODO: don't add cast if n is a cast
 		if (n->dtype = TYPE_ULONG) and (not hIsUlongCast(parent)) then
 			n = astNew(ASTKIND_CAST, n)
 			n->dtype = TYPE_ULONG
@@ -497,6 +501,18 @@ private function astOpsC2FB(byval n as AstNode ptr, byval is_bool_context as int
 
 		'' Turn -1|0 into 1|0 if the value may be used in math calculations etc.
 		if is_bool_context = FALSE then
+			n = astNew(ASTKIND_NEGATE, n)
+		end if
+
+	case else
+		'' A BOOLEAN-typed expression that is used as an int instead of as a
+		'' bool needs to be converted to a 0/1 LONG.
+		'' This includes integral values in expressions, constant expressions
+		'' assigned to enums, consts, #defines, and non-_Bool* variables.
+		''  * skipping on assignment to _Bools is not implemented
+		if is_bool_context = FALSE andalso n->dtype = TYPE_BOOLEAN then
+			n = astNew(ASTKIND_CAST, n)
+			n->dtype = TYPE_LONG
 			n = astNew(ASTKIND_NEGATE, n)
 		end if
 	end select
